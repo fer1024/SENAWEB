@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alge-Brother | Aprende Interactivamente</title>
+    <style>
+        /* Estilos generales */
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #6c63ff;
+            --accent: #ff6b6b;
+            --light: #f9f9f9;
+            --dark: #333;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #5a52e0;
+            transform: translateY(-2px);
+        }
+        
+        .dark-mode {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+    </style>
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Alge-Brother</div>
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">Inicio</a></li>
+                    <li><a href="#learn">Aprender</a></li>
+                    <li><a href="#apps">Aplicaciones</a></li>
+                    <li><a href="#progress">Progreso</a></li>
+                    <li><a href="#register">Registro</a></li>
+                </ul>
+                <button class="btn" onclick="toggleDarkMode()">Modo Oscuro/Claro</button>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="page">
+        <div class="container">
+            <h1>Bienvenido a Alge-Brother</h1>
+            <p>Domina los conceptos algebraicos con herramientas interactivas y explicaciones paso a paso.</p>
+            <button class="btn" onclick="showPage('learn')">Comenzar a Aprender</button>
+        </div>
+    </section>
+
+    <section id="quiz" class="page">
+        <div class="container">
+            <h2>Desafío Matemático</h2>
+            <p>Resuelve el siguiente problema:</p>
+            <p><strong>¿Cuál es el resultado de 3x² - 2x + 1 cuando x = 2?</strong></p>
+            <input type="number" id="quiz-answer" placeholder="Tu respuesta">
+            <button class="btn" onclick="checkAnswer()">Verificar</button>
+            <p id="quiz-feedback"></p>
+        </div>
+    </section>
+
+    <section id="progress" class="page">
+        <div class="container">
+            <h2>Tu Progreso</h2>
+            <p>Visualiza tu avance en los ejercicios y desafíos.</p>
+            <progress id="progress-bar" value="20" max="100"></progress>
+            <p id="progress-text">20% completado</p>
+        </div>
+    </section>
+
+    <script>
+        function checkAnswer() {
+            let answer = document.getElementById("quiz-answer").value;
+            let correct = 3 * (2 ** 2) - 2 * 2 + 1;
+            let feedback = document.getElementById("quiz-feedback");
+            let progressBar = document.getElementById("progress-bar");
+            let progressText = document.getElementById("progress-text");
+            
+            if (parseInt(answer) === correct) {
+                feedback.textContent = "¡Correcto!";
+                feedback.style.color = "green";
+                progressBar.value = 40;
+                progressText.textContent = "40% completado";
+            } else {
+                feedback.textContent = "Incorrecto, intenta de nuevo.";
+                feedback.style.color = "red";
+            }
+        }
+    </script>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alge-Brother - Todos los derechos reservados</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgebraFácil | Aprende Interactivamente</title>
+    <style>
+        /* Estilos generales */
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #6c63ff;
+            --accent: #ff6b6b;
+            --light: #f9f9f9;
+            --dark: #333;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .active {
+            background-color: var(--secondary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #5a52e0;
+            transform: translateY(-2px);
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        
+        /* Estilos específicos de la página de inicio */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1200/500') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Estilos para la página de registro */
+        .auth-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+        
+        /* Estilos para la página de aprendizaje */
+        .learn-container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin-bottom: 10px;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar li:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .sidebar li.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .interactive-element {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .exercise {
+            background-color: #f0f7ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .math-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+        
+        /* Estilos para la página de aplicaciones */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .app-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .app-image {
+            height: 180px;
+            background-color: #ddd;
+        }
+        
+        .app-content {
+            padding: 20px;
+        }
+        
+        .app-content h3 {
+            margin-bottom: 10px;
+        }
+        
+        /* Estilos para graficas y calculadoras */
+        .graph-container {
+            width: 100%;
+            height: 300px;
+            margin: 20px 0;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 20px 0;
+        }
+        
+        .calculator button {
+            padding: 15px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .calculator button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .calculator button.operator {
+            background-color: #ffd79c;
+        }
+        
+        .calculator button.equals {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .calculator-display {
+            grid-column: 1 / -1;
+            padding: 15px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        
+        /* Estilos para tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .learn-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">AlgebraFácil</div>
+                <ul class="nav-links">
+                    <li><a href="#home" class="active" onclick="showPage('home')">Inicio</a></li>
+                    <li><a href="#learn" onclick="showPage('learn')">Aprender</a></li>
+                    <li><a href="#apps" onclick="showPage('apps')">Aplicaciones</a></li>
+                    <li><a href="#register" onclick="showPage('register')">Registro</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Página de Inicio -->
+    <section id="home" class="page">
+        <div class="hero">
+            <div class="container">
+                <h1>Aprende Álgebra de Forma Interactiva</h1>
+                <p>Domina los conceptos algebraicos con herramientas interactivas y explicaciones paso a paso</p>
+                <button class="btn" onclick="showPage('learn')">Comenzar a Aprender</button>
+            </div>
+        </div>
+        
+        <div class="container">
+            <h2>¿Por qué elegirnos?</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Aprendizaje Interactivo</h3>
+                    <p>Nuestras lecciones incluyen ejemplos interactivos que te permiten experimentar con conceptos algebraicos en tiempo real.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Ejercicios Prácticos</h3>
+                    <p>Refuerza tu aprendizaje con ejercicios que se adaptan a tu nivel y te brindan retroalimentación inmediata.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Aplicaciones Reales</h3>
+                    <p>Descubre cómo el álgebra se aplica en situaciones del mundo real con ejemplos prácticos y problemas contextualizados.</p>
+                </div>
+            </div>
+            
+            <section>
+                <h2>Temas que cubrimos</h2>
+                <ul>
+                    <li>Expresiones algebraicas: conceptos básicos y reducción de términos semejantes</li>
+                    <li>Ecuaciones de primer y segundo grado: métodos de solución y aplicaciones</li>
+                    <li>Propiedades de los números reales: operaciones y factorización</li>
+                    <li>Funciones matemáticas: representación gráfica y análisis</li>
+                    <li>Sistemas de ecuaciones: métodos de solución</li>
+                    <li>Casos de factorización: factor común, trinomios, diferencia de cuadrados y más</li>
+                </ul>
+            </section>
+        </div>
+    </section>
+
+    <!-- Página de Aprendizaje -->
+    <section id="learn" class="page" style="display: none;">
+        <div class="container">
+            <h1>Aprende Álgebra Paso a Paso</h1>
+            
+            <div class="learn-container">
+                <div class="sidebar">
+                    <h3>Temas</h3>
+                    <ul>
+                        <li class="active" onclick="changeContent('expresiones')">Expresiones Algebraicas</li>
+                        <li onclick="changeContent('ecuaciones')">Ecuaciones</li>
+                        <li onclick="changeContent('propiedades')">Propiedades de Números Reales</li>
+                        <li onclick="changeContent('funciones')">Funciones Matemáticas</li>
+                        <li onclick="changeContent('sistemas')">Sistemas de Ecuaciones</li>
+                        <li onclick="changeContent('factorizacion')">Casos de Factorización</li>
+                    </ul>
+                </div>
+                
+                <div class="content" id="content-area">
+                    <!-- Contenido por defecto: Expresiones Algebraicas -->
+                    <h2>Expresiones Algebraicas</h2>
+                    <p>Una expresión algebraica es una combinación de números, variables y operaciones matemáticas. Vamos a aprender a identificar y simplificar expresiones algebraicas.</p>
+                    
+                    <h3>Conceptos Básicos</h3>
+                    <p>Las expresiones algebraicas contienen:</p>
+                    <ul>
+                        <li><strong>Variables:</strong> Letras que representan valores desconocidos (x, y, z)</li>
+                        <li><strong>Constantes:</strong> Números específicos (5, -3, 1/2)</li>
+                        <li><strong>Operaciones:</strong> Suma (+), resta (-), multiplicación (·), división (÷), potenciación (^)</li>
+                        <li><strong>Términos:</strong> Partes de una expresión separadas por operaciones de suma o resta</li>
+                    </ul>
+                    
+                    <div class="interactive-element">
+                        <h4>Ejemplo Interactivo: Identificar Términos</h4>
+                        <p>En la expresión <strong>3x² + 5x - 7</strong>, identifica:</p>
+                        <ul>
+                            <li>Primer término: <strong>3x²</strong> (coeficiente: 3, variable: x, exponente: 2)</li>
+                            <li>Segundo término: <strong>5x</strong> (coeficiente: 5, variable: x, exponente: 1)</li>
+                            <li>Tercer término: <strong>-7</strong> (es una constante, sin variables)</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Reducción de Términos Semejantes</h3>
+                    <p>Los términos semejantes son aquellos que tienen exactamente las mismas variables con los mismos exponentes. Solo podemos sumar o restar términos semejantes.</p>
+                    
+                    <div class="interactive-element">
+                        <h4>Paso a Paso: Reducir Términos Semejantes</h4>
+                        <p>Para simplificar <strong>7x + 3y - 2x + 5y</strong>:</p>
+                        <ol>
+                            <li>Agrupa los términos semejantes: <strong>(7x - 2x) + (3y + 5y)</strong></li>
+                            <li>Suma o resta los coeficientes: <strong>5x + 8y</strong></li>
+                        </ol>
+                    </div>
+                    
+                    <div class="exercise">
+                        <h4>Ejercicio: Reduce los términos semejantes</h4>
+                        <p>Simplifica la expresión: <strong>4a + 2b - 7a + 3b - 5</strong></p>
+                        <input type="text" class="math-input" id="exercise1-input" placeholder="Tu respuesta">
+                        <button class="btn" onclick="checkExercise('exercise1')">Verificar</button>
+                        <div class="feedback" id="exercise1-feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página de Aplicaciones -->
+    <section id="apps" class="page" style="display: none;">
+        <div class="container">
+            <h1>Aplicaciones Interactivas</h1>
+            <p>Pon en práctica lo que has aprendido con nuestras aplicaciones interactivas diseñadas para reforzar conceptos algebraicos.</p>
+            
+            <div class="app-grid">
+                <div class="app-card">
+                    <div class="app-image"></div>
+                    <div class="app-content">
+                        <h3>Graficador de Funciones</h3>
+                        <p>Visualiza funciones lineales, cuadráticas y más. Comprende cómo los coeficientes afectan la gráfica.</p>
+                        <button class="btn" onclick="loadApp('grapher')">Abrir</button>
+                    </div>
+                </div>
+                
+                <div class="app-card">
+                    <div class="app-image"></div>
+                    <div class="app-content">
+                        <h3>Resolvedor de Ecuaciones</h3>
+                        <p>Introduce una ecuación y observa el proceso paso a paso para resolverla.</p>
+                        <button class="btn" onclick="loadApp('equation-solver')">Abrir</button>
+                    </div>
+                </div>
+                
+                <div class="app-card">
+                    <div class="app-image"></div>
+                    <div class="app-content">
+                        <h3>Factorizador</h3>
+                        <p>Aprende a factorizar expresiones algebraicas con ejemplos interactivos y paso a paso.</p>
+                        <button class="btn" onclick="loadApp('factorizer')">Abrir</button>
+                    </div>
+                </div>
+                
+                <div class="app-card">
+                    <div class="app-image"></div>
+                    <div class="app-content">
+                        <h3>Calculadora de Sistemas</h3>
+                        <p>Resuelve sistemas de ecuaciones por diferentes métodos y visualiza la solución gráficamente.</p>
+                        <button class="btn" onclick="loadApp('systems-calculator')">Abrir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="app-container" style="display: none; margin-top: 30px;">
+                <h2 id="app-title">Aplicación</h2>
+                <button class="btn" style="margin-bottom: 20px;" onclick="closeApp()">Volver a la lista</button>
+                
+                <!-- Contenedor para la aplicación de Graficador de Funciones -->
+                <div id="grapher-app" class="app-content-container" style="display: none;">
+                    <h3>Graficador de Funciones</h3>
+                    <p>Introduce una función para visualizarla. Ejemplos: x^2, 2*x+1, x^2-4</p>
+                    <div class="form-group">
+                        <input type="text" id="function-input" placeholder="Ej: x^2+2*x-3">
+                        <button class="btn" onclick="drawGraph()">Graficar</button>
+                    </div>
+                    <div class="graph-container" id="graph-output">
+                        <!-- Aquí se mostrará la gráfica -->
+                    </div>
+                </div>
+                
+                <!-- Contenedor para la aplicación de Resolvedor de Ecuaciones -->
+                <div id="equation-solver-app" class="app-content-container" style="display: none;">
+                    <h3>Resolvedor de Ecuaciones</h3>
+                    <p>Introduce una ecuación para resolverla paso a paso.</p>
+                    <div class="form-group">
+                        <input type="text" id="equation-input" placeholder="Ej: 2x+3=7">
+                        <button class="btn" onclick="solveEquation()">Resolver</button>
+                    </div>
+                    <div id="equation-steps">
+                        <!-- Aquí se mostrarán los pasos -->
+                    </div>
+                </div>
+                
+                <!-- Contenedor para la aplicación de Factorizador -->
+                <div id="factorizer-app" class="app-content-container" style="display: none;">
+                    <h3>Factorizador</h3>
+                    <p>Introduce una expresión para factorizarla.</p>
+                    <div class="form-group">
+                        <input type="text" id="factorizer-input" placeholder="Ej: x^2-4">
+                        <button class="btn" onclick="factorizeExpression()">Factorizar</button>
+                    </div>
+                    <div id="factorization-steps">
+                        <!-- Aquí se mostrarán los pasos -->
+                    </div>
+                </div>
+                
+                <!-- Contenedor para la aplicación de Calculadora de Sistemas -->
+                <div id="systems-calculator-app" class="app-content-container" style="display: none;">
+                    <h3>Calculadora de Sistemas de Ecuaciones</h3>
+                    <p>Introduce un sistema de ecuaciones lineales para resolverlo.</p>
+                    <div class="form-group">
+                        <input type="text" id="system-input1" placeholder="Ej: 2x+y=5">
+                        <input type="text" id="system-input2" placeholder="Ej: x-y=1">
+                        <select id="system-method">
+                            <option value="substitucion">Sustitución</option>
+                            <option value="igualacion">Igualación</option>
+                            <option value="reduccion">Reducción</option>
+                        </select>
+                        <button class="btn" onclick="solveSystem()">Resolver</button>
+                    </div>
+                    <div id="system-solution">
+                        <!-- Aquí se mostrará la solución -->
+                    </div>
+                    <div class="graph-container" id="system-graph">
+                        <!-- Aquí se mostrará la gráfica del sistema -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página de Registro -->
+    <section id="register" class="page" style="display: none;">
+        <div class="container">
+            <div class="auth-container">
+                <h2>Regístrate para acceder a todo el contenido</h2>
+                <p>Crea una cuenta gratuita para guardar tu progreso y acceder a todas nuestras herramientas interactivas.</p>
+                
+                <form id="register-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="name">Nombre completo</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">Confirmar contraseña</label>
+                        <input type="password" id="confirm-password" required>
+                    </div>
+                    
+                    <button class="btn" style="width: 100%;" onclick="register()">Registrarse</button>
+                    
+                    <p style="text-align: center; margin-top: 20px;">
+                        ¿Ya tienes una cuenta? <a href="#" onclick="showLoginForm()">Inicia sesión</a>
+                    </p>
+                </form>
+                
+                <form id="login-form" style="display: none;" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="login-email">Correo electrónico</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Contraseña</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    
+                    <button class="btn" style="width: 100%;" onclick="login()">Iniciar sesión</button>
+                    
+                    <p style="text-align: center; margin-top: 20px;">
+                        ¿No tienes una cuenta? <a href="#" onclick="showRegisterForm()">Regístrate</a>
+                    </p>
+                </form>
+                
+                <div id="auth-message" style="display: none; margin-top: 20px; padding: 15px; border-radius: 4px; text-align: center;"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AlgebraFácil - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    

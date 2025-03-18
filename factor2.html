@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resolver Ecuación Cuadrática | Alge-Brother</title>
+    <style>
+        :root {
+            --primary: #2E86C1;
+            --secondary: #F39C12;
+            --accent: #28B463;
+            --light: #F8F9FA;
+            --dark: #2C3E50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--accent);
+        }
+
+        .result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: left;
+            display: none;
+        }
+
+        .procedure {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid var(--secondary);
+            border-radius: 5px;
+        }
+
+        .procedure p {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .math {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Resuelve la Ecuación Cuadrática</h2>
+        <p>Ingresa los valores de <strong>a</strong>, <strong>b</strong> y <strong>c</strong> en la ecuación \( ax^2 + bx + c = 0 \) y observa la solución paso a paso.</p>
+
+        <form id="quadratic-form">
+            <div class="form-group">
+                <label for="a">Valor de a</label>
+                <input type="number" id="a" required>
+            </div>
+
+            <div class="form-group">
+                <label for="b">Valor de b</label>
+                <input type="number" id="b" required>
+            </div>
+
+            <div class="form-group">
+                <label for="c">Valor de c</label>
+                <input type="number" id="c" required>
+            </div>
+
+            <button class="btn" type="button" onclick="solveQuadratic()">Resolver</button>
+        </form>
+
+        <div id="solution" class="result-container"></div>
+        <div id="procedure" class="procedure" style="display: none;"></div>
+    </div>
+
+    <script>
+        function gcd(a, b) {
+            return b === 0 ? Math.abs(a) : gcd(b, a % b);
+        }
+
+        function solveQuadratic() {
+            let a = parseFloat(document.getElementById("a").value);
+            let b = parseFloat(document.getElementById("b").value);
+            let c = parseFloat(document.getElementById("c").value);
+            let solutionDiv = document.getElementById("solution");
+            let procedureDiv = document.getElementById("procedure");
+
+            if (isNaN(a) || isNaN(b) || isNaN(c) || a === 0) {
+                solutionDiv.innerHTML = "<p>Por favor, ingresa valores válidos.</p>";
+                solutionDiv.style.display = "block";
+                procedureDiv.style.display = "none";
+                return;
+            }
+
+            // Paso 1: Multiplicar por 'a'
+            let newC = a * c;
+            let procedureText = `<p><strong>Paso 1:</strong> Multiplicamos la ecuación por a: 
+            <br>(${a * a}x²) + ${b}x (${a}) + (${newC})</p>`;
+
+            // Paso 2: Encontrar dos números que multiplican a newC y suman b
+            let num1 = 0, num2 = 0;
+            for (let i = -Math.abs(newC); i <= Math.abs(newC); i++) {
+                if (i !== 0 && newC % i === 0) {
+                    let j = newC / i;
+                    if (i + j === b) {
+                        num1 = i;
+                        num2 = j;
+                        break;
+                    }
+                }
+            }
+
+            if (num1 === 0 && num2 === 0) {
+                solutionDiv.innerHTML = "<p>No se puede factorizar con números enteros.</p>";
+                solutionDiv.style.display = "block";
+                return;
+            }
+
+            procedureText += `<p><strong>Paso 2:</strong> Encontramos dos números tales que multiplicados den ${newC} y sumados ${b}, 
+                <br>esto es:  <strong>${num1}</strong> y <strong>${num2}</strong></p>`;
+            procedureText += `<p><strong>Paso 3:</strong> Reescribimos la ecuación:<br>
+            (${a}x + ${num1}) (${a}x + ${num2})</p>`;
+
+            // Paso 4: Dividir por a y sacar MCD positivo
+            let gcd1 = Math.abs(gcd(a, num1));
+            let gcd2 = Math.abs(gcd(a, num2));
+
+            let factor1 = `(${a / gcd1}x + ${num1 / gcd1})`;
+            let factor2 = `(${a / gcd2}x + ${num2 / gcd2})`;
+
+            procedureText += `<p><strong>Paso 4:</strong> Simplificamos usando el MCD positivo:<br>
+            ${factor1} * ${factor2}</p>`;
+
+            solutionDiv.innerHTML = `<p>Solución factorizada: <strong>${factor1} ${factor2}</strong></p>`;
+            solutionDiv.style.display = "block";
+            procedureDiv.innerHTML = procedureText;
+            procedureDiv.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
+
